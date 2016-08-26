@@ -54,11 +54,13 @@ h4 {
 }
 
 h2,
-h3,
 h4,
 h5 {
   padding:10px 5%;
 
+}
+h3 {
+    padding-top: 15px;
 }
 
 
@@ -83,6 +85,10 @@ p {
   font-size: 14px;
   color: #333;
   line-height: 21px;
+}
+
+span[id="role"]{
+    color: wheat;
 }
 
 a {
@@ -165,6 +171,7 @@ ul {
 
 img {
   padding: 10px;
+  
 }
 
 span {
