@@ -89,6 +89,7 @@ p {
 
 span[id="role"]{
     color: wheat;
+    
 }
 
 a {
@@ -103,6 +104,7 @@ a {
   font-size: 18px;
   color: #f3f3f3;
   line-height: 28px;
+  
 }
 
 #skills-h3 {
@@ -146,7 +148,21 @@ a {
   justify-content: space-around;
   padding: 10px;
 }
+.skillBar{
+    width: 100%;
+    padding: 20px 0 10px 0;
+    margin: 10px 0px 10px 0px;
+    }
 
+.flex-item{
+    text-align: center;
+}
+
+.flex-item-row{
+    diplay: flex,
+    flex-direction: row;
+    padding: 10px;
+}
 .flex-column {
   display: flex;
   flex-direction: column;
@@ -158,24 +174,36 @@ a {
   padding: 2.5% 5%;
 }
 
+
+
 ul {
   list-style-type: none;
 }
 
 .biopic {
-  float: left;
   padding: 10px;
-  width: 200px;
-  display: none;
+  /* width: 200px; */
+  /*display: none; */
 }
 
 img {
   padding: 10px;
+  width: 100%;
+  margin-top: : 15px;
+   
   
 }
 
 span {
   padding: 5px;
+}
+
+i {
+    line-height: 50px;
+}
+
+#workExperience {
+    padding-bottom: 25px;
 }
 
 #lets-connect {
@@ -192,7 +220,7 @@ span {
 
 @media only screen and (max-width:900px) {
   .biopic {
-    width: 175px;
+   /* width: 175px; */
   }
 }
 
@@ -201,11 +229,9 @@ span {
     margin-top: 10%;
   }
   .biopic {
-    width: 150px;
+    /* width: 150px;*/
   }
-  .welcome-message {
-    display: none;
-  }
+
 }
 
 #map {
@@ -225,4 +251,38 @@ span {
   .biopic {
     display: block;
   }
+}
+
+
+@media only screen and (max-width: 500px){
+    .flex-box{
+       flex-direction: column;
+    }
+    #role{
+        display: inline-block;
+    }
+    .welcome-message {
+    display: block;
+    font-size: 0.8em;
+        text-align: center;
+  
+    }
+    .biopic, img {
+        width: 100%;
+        padding: 0;
+       
+    }
+    li.flex-item.white-text{
+        text-align: center;
+    }
+    
+    #workExperience , #mapDiv{
+        display:none;
+    }
+    
+    #lets-connect{
+        margin-top:0;
+    }
+    
+       
 }

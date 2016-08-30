@@ -16,20 +16,28 @@ var bio = {
         "mobile": "+972-544-797591",
         "email": "ilanhayat@gmail.com",
         "github": "https://github.com/ilanh81/frontend-nanodegree-resume",
-        "location": "Binyamina-Giv'at Ada, Israel"
+        "location": "Binyamina-Giv'at Ada, Israel",
+        "facebook": "https://www.facebook.com/ilan.hayat.7",
+        "linkedIN": "https://www.linkedin.com/in/ilan-hayat-162490b"
     },
     "welcomeMessage": "Welcome to my resume page, I hope we can fullfill drreams together!",
-    "skills": [
-        "HTML",
-        "CSS",
-        "Javascript",
-        "PHP",
-        "Python",
-        "Machine Learning",
-        "Data Anlaysis",
-        "SEO",
-        "iOS Development",
-        "Android Development"
+    "skills": [ 
+        {
+            skill:"HTML",
+            skillLevel:50
+        },
+        {
+            skill:"CSS",
+            skillLevel:"50"
+        },
+        {
+            skill:"Javascript",
+            skillLevel:"30"
+        },
+        {
+            skill:"PHP",
+            skillLevel:"20"
+        }
         
     ],
     "biopic": "images/me.jpg",
@@ -41,17 +49,28 @@ var bio = {
         
         $('#header').prepend(this.replace(HTMLheaderRole,this.role));
         $('#header').prepend(this.replace(HTMLheaderName,this.name));
+        $("#header").append(this.replace(HTMLwelcomeMsg,this.welcomeMessage));
         $('#topContacts').append(this.replace(HTMLmobile,this.contacts.mobile));
         $('#topContacts').append(this.replace(HTMLemail,this.contacts.email));
         $('#topContacts').append(this.replace(HTMLlocation,this.contacts.location));
         $("#header").append(this.replace(HTMLbioPic,this.biopic));
-        $("#header").append(this.replace(HTMLwelcomeMsg,this.welcomeMessage));
+        
         $("#header").append(HTMLskillsStart);
         for(skill in bio.skills) {
-            $("#skills").append(this.replace(HTMLskills,bio.skills[skill]));
+            $("#skills").append(this.replace(HTMLskills,bio.skills[skill].skill));
+            $("#skills").append(this.replace(HTMLskillsBar,bio.skills[skill].skillLevel));
+            
         };
         
         
+    },
+    
+     "displayFooter": function(){
+        $("#footerContacts").append(this.replace(HTMLfooterFB,bio.contacts.facebook));
+         $("#footerContacts").append(this.replace(HTMLfooterLinkedIN,bio.contacts.linkedIN));
+         $("#footerContacts").append(this.replace(HTMLfooterEmail,"mailto:"+bio.contacts.email));
+         $("#footerContacts").append(this.replace(HTMLfooterGitHub,bio.contacts.github));
+    
     }
     
 };
@@ -139,6 +158,8 @@ var education = {
            
         }
     }
+    
+   
 };
 
 var work = {
@@ -217,7 +238,7 @@ var projects = {
           "title": "Online resume",
           "dates": "2016-2016",
           "description": "My career path",
-          "images":[]
+          "images":["http://placekitten.com/g/200/300"]
       },
       {
           "title": "Home Academy",
@@ -260,16 +281,16 @@ var projects = {
         $(".project-entry").append(this.replace(HTMLprojectTitle,this.upperCase(this.projects[project].title)));
         $(".project-entry").append(this.replace(HTMLprojectDates,this.projects[project].dates));
         $(".project-entry").append(this.replace(HTMLprojectDescription,this.projects[project].description));
-        $(".project-entry").append(this.replace(HTMLprojectDates,this.projects[project].dates));
         for (pic in this.projects[project].images){
             if(this.projects[project].images.length!=0){
                 $(".project-entry").append(this.replace(HTMLprojectImage,this.projects[project].images[pic]));
-                console.log(this.projects[project].images[pic]);
             }
         }
     }
 }
 };
+
+
 
 
 /*
@@ -279,7 +300,42 @@ How to append data to the index.html file
 */
 
 bio.display();
+bio.displayFooter();
 work.display();
 projects.display();
 education.display();
 $("#mapDiv").append(googleMap);
+
+function isElementInViewport(el) {
+    var rect = el.getBoundingClientRect();
+
+    return rect.bottom > 0 &&
+        rect.right > 0 &&
+        rect.left < (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */ &&
+        rect.top < (window.innerHeight || document.documentElement.clientHeight) /* or $(window).height() */;
+}
+
+
+var a = $('div.date-text');
+
+
+function onVisibilityChange(el, callback) {
+    var old_visible;
+    return function () {
+        var visible = isElementInViewport(el);
+        if (visible != old_visible) {
+            old_visible = visible;
+            if (typeof callback == 'function') {
+                callback();
+            }
+        }
+    }
+}
+
+var handler = onVisibilityChange(a[5], function() {
+   console.log(isElementInViewport(a[5]));
+});
+
+
+//jQuery
+$(window).on('DOMContentLoaded load resize scroll', handler); 

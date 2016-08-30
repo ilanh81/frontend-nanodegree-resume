@@ -24,14 +24,16 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
 
   <!-- Load the page styles. -->
   <link href="css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
 
 
 
   <!--
   Uncomment the <script> tag below when you're ready to add an interactive Google Map to your resume!
   -->
-<script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
 
+   </script>
+  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBN9Hu-s1A2T7necQ4fKYTWJdXAl0kPJtQ&libraries=places"></script>
   <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
@@ -44,8 +46,8 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
     resume below. You can pretty easily figure out what each section will
     display by looking at the id or at what's written between the <h2> tags.
     -->
-    <div id="header" class="center-content clear-fix">
-      <ul id="topContacts" class="flex-box"></ul>
+    <div id="header" class="center-content clear-fix align-left">
+        <ul id="topContacts" class="flex-box"></ul>
     </div>
     <div style="clear: both;"></div>
     <div id="workExperience" class="gray">
@@ -86,10 +88,12 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
   the DOM. jQuery is fast and easy to use, but it doesn't do anything
   you can't accomplish with vanilla (regular) JavaScript.
   -->
+  
   <script src="js/jQuery.js"></script>
 
   <!-- More on helper.js in the class -->
   <script src="js/helper.js"></script>
+  
 
   <!--
   The next line tells the browser where to download the JavaScript file you'll be
@@ -143,6 +147,6 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
     if(document.getElementById('map') === null) {
       document.getElementById('mapDiv').style.display = 'none';
     }
-  </script>
+ 
 </body>
 </html>

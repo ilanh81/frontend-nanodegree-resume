@@ -23,11 +23,12 @@ var HTMLgithub = '<li class="flex-item"><span class="orange-text">github</span><
 var HTMLblog = '<li class="flex-item"><span class="orange-text">blog</span><span class="white-text">%data%</span></li>';
 var HTMLlocation = '<li class="flex-item"><span class="orange-text">location</span><span class="white-text">%data%</span></li>';
 
-var HTMLbioPic = '<img src="%data%" class="biopic">';
-var HTMLwelcomeMsg = '<span class="welcome-message">%data%</span>';
+var HTMLbioPic = '<img src="%data%" class="biopic flex-item">';
+var HTMLwelcomeMsg = '<span class="welcome-message flex-item">%data%</span>';
 
 var HTMLskillsStart = '<h3 id="skills-h3">Skills at a Glance:</h3><ul id="skills" class="flex-column"></ul>';
-var HTMLskills = '<li class="flex-item"><span class="white-text">%data%</span></li>';
+var HTMLskills = '<li class="flex-item"><span class="white-text">%data%</span>';
+var HTMLskillsBar = '<progress class="skillBar" max="100" value=%data%></span></li>';
 
 var HTMLworkStart = '<div class="work-entry"></div>';
 var HTMLworkEmployer = '<a href="#">%data%';
@@ -57,6 +58,11 @@ var HTMLonlineURL = '<br><a href="#">%data%</a>';
 
 var internationalizeButton = '<button>Internationalize</button>';
 var googleMap = '<div id="map"></div>';
+
+var HTMLfooterFB = '<li class="flex-item-row"><a href=%data%><i class="fa fa-facebook-official fa-5x" aria-hidden="true"></i></a>';
+var HTMLfooterLinkedIN = '<li class="flex-item-row"><a href=%data%><i class="fa fa-linkedin fa-5x" aria-hidden="true"></i></a>';
+var HTMLfooterEmail = '<li class="flex-item-row"><a href=%data%><i class="fa fa-envelope fa-5x" aria-hidden="true"></i></a>';
+var HTMLfooterGitHub = '<li class="flex-item-row"><a href=%data%><i class="fa fa-github fa-5x" aria-hidden="true"></i></a>';
 
 
 /*
@@ -178,6 +184,7 @@ function initializeMap() {
     // hmmmm, I wonder what this is about...
     google.maps.event.addListener(marker, 'click', function() {
       // your code goes here!
+        infoWindow.open(map,marker);
     });
 
     // this is where the pin actually gets added to the map.
