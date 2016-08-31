@@ -9,6 +9,8 @@ The JSON objects with all the data
 ----------------------------------
 */
 
+
+// bio object containing all biography
 var bio = {
     "name": "Ilan Hayat",
     "role": "Front-end Web Developer",
@@ -42,11 +44,14 @@ var bio = {
     ],
     "biopic": "images/me.jpg",
     "codepic": "images/keepClamAndLearnToCode-600.jpg",
+    
+    // helper function , takes target as variable object which is being appended and content which is going to replace the %data% placeholder
     "replace": function(target,content){
         return target.replace("%data%",content);
     },
     
-    "display": function(){
+    // function to display the header 
+    "displayHeader": function(){
         
         $('#header').prepend(this.replace(HTMLheaderRole,this.role));
         $('#header').prepend(this.replace(HTMLheaderName,this.name));
@@ -68,7 +73,7 @@ var bio = {
         
         
     },
-    
+    // function to display the footer
      "displayFooter": function(){
         $("#footerContacts").append(this.replace(HTMLfooterFB,bio.contacts.facebook));
          $("#footerContacts").append(this.replace(HTMLfooterLinkedIN,bio.contacts.linkedIN));
@@ -79,6 +84,7 @@ var bio = {
     
 };
 
+// object storing all education data
 var education = {
     "schools":[
         {
@@ -131,6 +137,8 @@ var education = {
         }
         
     ],
+    
+    // helper function to properly display school or course title names so first letter is capital and the rest is lowercase.
     "upperCase": function(string){
     var split = string.split(" ");
     var result = "";
@@ -303,13 +311,15 @@ How to append data to the index.html file
 ----------------------------------
 */
 
-bio.display();
+bio.displayHeader();
 bio.displayFooter();
 work.display();
 projects.display();
 education.display();
 $("#mapDiv").append(googleMap);
 
+
+// callback function to figure out which biopic to select based on screen size so we can optimize load time and imporve picture sharpness for different screen sizes 
 function bioPicHandler(){
     var width = $(window).width();
     if(width<=499){
@@ -332,12 +342,17 @@ function codePicHandler(){
 
 
 // callback function to handle the event of screen resize below 500px to change the icon sizes
-function iconHander(width){
+function iconHandler(width){
+   console.log(width);
     if(width<=500){
-       console.log(width);
+      
         $("i").each(function(){
-            $(this).addClass("fa-3x");
-            $(this).removeClass("fa-5x");
+            if(!$(this).hasClass("fa-3x")) {
+                $(this).addClass("fa-3x");
+            }
+            if ($(this).hasClass("fa-5x")) {
+                $(this).removeClass("fa-5x");
+            }
         });
     }else {
         $("i").each(function(){
@@ -351,8 +366,11 @@ function iconHander(width){
 }
 
 
-//jQuery
+//responsiveness for some elements
+// iconHandler is setting the icon sizes for the footer
+$(document).on("load resize",iconHandler($(this).width()));
+// bioPicHandler is deciding which picture to fetch from the server to optimize load time
 $(window).on('load resize',bioPicHandler);
+// codePicHandler fires when biopic is resized to match the picture height of codePic
 $(".biopic").on('load resize',codePicHandler);
 
-$(window).resize(iconHander($(window).width()));

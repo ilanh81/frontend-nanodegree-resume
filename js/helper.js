@@ -24,6 +24,8 @@ var HTMLblog = '<li class="flex-item"><span class="orange-text">blog</span><span
 var HTMLlocation = '<li class="flex-item"><span class="orange-text">location</span><span class="white-text">%data%</span></li>';
 
 var HTMLbioPic = '<img class="biopic flex-item">';
+
+// added codePic to further style the page
 var HTMLcodePic = '<img class="codePic flex-item" src="%data%">';
 var HTMLwelcomeMsg = '<span class="welcome-message flex-item">%data%</span>';
 
@@ -179,7 +181,8 @@ function initializeMap() {
     // or hover over a pin on a map. They usually contain more information
     // about a location.
     var infoWindow = new google.maps.InfoWindow({
-      content: '<div class=infoWindow">Wow..this is a cool feature.. '+placeData.photos[0].html_attributions[0]+'</div>'
+      // [ILAN] - modified the content to of the infoWindow to display some stuff that is picked up by the places service result response
+        content: '<div class=infoWindow">Wow..this is a cool feature.. '+placeData.photos[0].html_attributions[0]+'</div>'
     });
 
     // hmmmm, I wonder what this is about...
