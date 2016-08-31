@@ -14,6 +14,10 @@ h6 {
   font-family: "Roboto", sans-serif;
 }
 
+span > a {
+    display: inline;
+}
+
 .clear-fix {
   overflow: auto;
 }
@@ -159,9 +163,10 @@ a {
 }
 
 .flex-item-row{
-    diplay: flex,
+    display: flex;
     flex-direction: row;
     padding: 10px;
+    flex-wrap: nowrap;
 }
 .flex-column {
   display: flex;
@@ -182,8 +187,7 @@ ul {
 
 .biopic {
   padding: 10px;
-  /* width: 200px; */
-  /*display: none; */
+  
 }
 
 img {
@@ -218,22 +222,6 @@ i {
   }
 }
 
-@media only screen and (max-width:900px) {
-  .biopic {
-   /* width: 175px; */
-  }
-}
-
-@media only screen and (max-width: 750px) {
-  #lets-connect {
-    margin-top: 10%;
-  }
-  .biopic {
-    /* width: 150px;*/
-  }
-
-}
-
 #map {
   display: block;
   height: 100%;
@@ -246,17 +234,29 @@ i {
   padding-bottom: 5%;
 }
 
-@media only screen and (min-width: 750px) {
-  #skills-h3,
-  .biopic {
+@media only screen and (min-width: 551px) {
+  .biopic  {
     display: block;
+    position: relative;
+    float: left;
+    width: 50%;
+    padding: 0;
   }
+    .codePic {
+        width: 50%;
+        padding: 0;
+        position: relative;
+        float: right;
+    
+        
+    }
+    
 }
 
 
 @media only screen and (max-width: 500px){
     .flex-box{
-       flex-direction: column;
+       flex-direction: row;
     }
     #role{
         display: inline-block;
@@ -276,7 +276,7 @@ i {
         text-align: center;
     }
     
-    #workExperience , #mapDiv{
+    #workExperience , #mapDiv, .codePic{
         display:none;
     }
     

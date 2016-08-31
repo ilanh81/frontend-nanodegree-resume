@@ -23,7 +23,8 @@ var HTMLgithub = '<li class="flex-item"><span class="orange-text">github</span><
 var HTMLblog = '<li class="flex-item"><span class="orange-text">blog</span><span class="white-text">%data%</span></li>';
 var HTMLlocation = '<li class="flex-item"><span class="orange-text">location</span><span class="white-text">%data%</span></li>';
 
-var HTMLbioPic = '<img src="%data%" class="biopic flex-item">';
+var HTMLbioPic = '<img class="biopic flex-item">';
+var HTMLcodePic = '<img class="codePic flex-item" src="%data%">';
 var HTMLwelcomeMsg = '<span class="welcome-message flex-item">%data%</span>';
 
 var HTMLskillsStart = '<h3 id="skills-h3">Skills at a Glance:</h3><ul id="skills" class="flex-column"></ul>';
@@ -59,10 +60,10 @@ var HTMLonlineURL = '<br><a href="#">%data%</a>';
 var internationalizeButton = '<button>Internationalize</button>';
 var googleMap = '<div id="map"></div>';
 
-var HTMLfooterFB = '<li class="flex-item-row"><a href=%data%><i class="fa fa-facebook-official fa-5x" aria-hidden="true"></i></a>';
-var HTMLfooterLinkedIN = '<li class="flex-item-row"><a href=%data%><i class="fa fa-linkedin fa-5x" aria-hidden="true"></i></a>';
-var HTMLfooterEmail = '<li class="flex-item-row"><a href=%data%><i class="fa fa-envelope fa-5x" aria-hidden="true"></i></a>';
-var HTMLfooterGitHub = '<li class="flex-item-row"><a href=%data%><i class="fa fa-github fa-5x" aria-hidden="true"></i></a>';
+var HTMLfooterFB = '<li class="flex-item-row"><a href=%data%><i class="fa fa-facebook-official fa-5x fa-3x" aria-hidden="true"></i></a>';
+var HTMLfooterLinkedIN = '<li class="flex-item-row"><a href=%data%><i class="fa fa-linkedin fa-5x fa-3x" aria-hidden="true"></i></a>';
+var HTMLfooterEmail = '<li class="flex-item-row"><a href=%data%><i class="fa fa-envelope fa-5x fa-3x" aria-hidden="true"></i></a>';
+var HTMLfooterGitHub = '<li class="flex-item-row"><a href=%data%><i class="fa fa-github fa-5x fa-3x" aria-hidden="true"></i></a>';
 
 
 /*
@@ -160,13 +161,13 @@ function initializeMap() {
   about a single location.
   */
   function createMapMarker(placeData) {
-
+   //console.log(placeData);
     // The next lines save location data from the search result object to local variables
     var lat = placeData.geometry.location.lat();  // latitude from the place service
     var lon = placeData.geometry.location.lng();  // longitude from the place service
     var name = placeData.formatted_address;   // name of the place from the place service
     var bounds = window.mapBounds;            // current boundaries of the map window
-
+   //console.log(placeData.photos[0].html_attributions[0]);
     // marker is an object with additional data about the pin for a single location
     var marker = new google.maps.Marker({
       map: map,
@@ -178,7 +179,7 @@ function initializeMap() {
     // or hover over a pin on a map. They usually contain more information
     // about a location.
     var infoWindow = new google.maps.InfoWindow({
-      content: name
+      content: '<div class=infoWindow">Wow..this is a cool feature.. '+placeData.photos[0].html_attributions[0]+'</div>'
     });
 
     // hmmmm, I wonder what this is about...

@@ -20,7 +20,7 @@ var bio = {
         "facebook": "https://www.facebook.com/ilan.hayat.7",
         "linkedIN": "https://www.linkedin.com/in/ilan-hayat-162490b"
     },
-    "welcomeMessage": "Welcome to my resume page, I hope we can fullfill drreams together!",
+    "welcomeMessage": "Welcome to my resume page, I love sailing, basketball. woodworking, mounting biking and hiking, but my true passion is coding experiences. I love what I do and tackle every problem with passion, patience and professionalism. If you are looking for amazing designs and intuative UX <a href='#footerContacts'>contact me</a>, I would love to hear your ideas and materialize them",
     "skills": [ 
         {
             skill:"HTML",
@@ -41,6 +41,7 @@ var bio = {
         
     ],
     "biopic": "images/me.jpg",
+    "codepic": "images/keepClamAndLearnToCode-600.jpg",
     "replace": function(target,content){
         return target.replace("%data%",content);
     },
@@ -53,7 +54,10 @@ var bio = {
         $('#topContacts').append(this.replace(HTMLmobile,this.contacts.mobile));
         $('#topContacts').append(this.replace(HTMLemail,this.contacts.email));
         $('#topContacts').append(this.replace(HTMLlocation,this.contacts.location));
+        $("#header").append('<div style="clear: both;"></div>');
         $("#header").append(this.replace(HTMLbioPic,this.biopic));
+        $("#header").append(this.replace(HTMLcodePic,this.codepic));
+        $("#header").append('<div style="clear: both;"></div>');
         
         $("#header").append(HTMLskillsStart);
         for(skill in bio.skills) {
@@ -306,36 +310,49 @@ projects.display();
 education.display();
 $("#mapDiv").append(googleMap);
 
-function isElementInViewport(el) {
-    var rect = el.getBoundingClientRect();
-
-    return rect.bottom > 0 &&
-        rect.right > 0 &&
-        rect.left < (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */ &&
-        rect.top < (window.innerHeight || document.documentElement.clientHeight) /* or $(window).height() */;
-}
-
-
-var a = $('div.date-text');
-
-
-function onVisibilityChange(el, callback) {
-    var old_visible;
-    return function () {
-        var visible = isElementInViewport(el);
-        if (visible != old_visible) {
-            old_visible = visible;
-            if (typeof callback == 'function') {
-                callback();
-            }
-        }
+function bioPicHandler(){
+    var width = $(window).width();
+    if(width<=499){
+        
+        $(".biopic").removeAttr("src").attr("src","images/me-600.jpg");
+    }else if(width<=900){
+        $(".biopic").removeAttr("src").attr("src","images/me-980.jpg");
+    }else {
+        $(".biopic").removeAttr("src").attr("src","images/me-1200.jpg");
     }
 }
 
-var handler = onVisibilityChange(a[5], function() {
-   console.log(isElementInViewport(a[5]));
-});
+// callback to resize the codePic element to match the height of the biopic element. Callback is attached to the biopic resize or load event, with CSS I control it only to show only on specific screen sizes to match my responsive layout design
+function codePicHandler(){
+   
+    var h = $('.biopic').height();
+    
+    $(".codePic").height(h);
+}
+
+
+// callback function to handle the event of screen resize below 500px to change the icon sizes
+function iconHander(width){
+    if(width<=500){
+       console.log(width);
+        $("i").each(function(){
+            $(this).addClass("fa-3x");
+            $(this).removeClass("fa-5x");
+        });
+    }else {
+        $("i").each(function(){
+            if(!$(this).hasClass("fa-5x")){
+                $(this).addClass("fa-5x");
+                $(this).removeClass("fa-3x");    
+            }
+            
+        });
+    }
+}
 
 
 //jQuery
-$(window).on('DOMContentLoaded load resize scroll', handler); 
+$(window).on('load resize',bioPicHandler);
+$(".biopic").on('load resize',codePicHandler);
+
+$(window).resize(iconHander($(window).width()));
