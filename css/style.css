@@ -91,7 +91,7 @@ p {
   line-height: 21px;
 }
 
-span[id="role"]{
+#role{
     color: wheat;
     
 }
@@ -154,8 +154,8 @@ a {
 }
 .skillBar{
     width: 100%;
-    padding: 20px 0 10px 0;
-    margin: 10px 0px 10px 0px;
+    
+    margin: 10px 0 10px 0;
     }
 
 .flex-item{
@@ -191,11 +191,9 @@ ul {
 }
 
 img {
-  padding: 10px;
-  width: 100%;
-  margin-top: : 15px;
-   
   
+  width: 100%;
+  margin-top: 15px;
 }
 
 span {
@@ -231,7 +229,7 @@ i {
 #mapDiv {
   height: 400px;
   width: 100%;
-  padding-bottom: 5%;
+  
 }
 
 @media only screen and (min-width: 551px) {

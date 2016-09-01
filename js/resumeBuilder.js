@@ -26,7 +26,7 @@ var bio = {
     "skills": [ 
         {
             skill:"HTML",
-            skillLevel:50
+            skillLevel:"50"
         },
         {
             skill:"CSS",
@@ -50,9 +50,24 @@ var bio = {
         return target.replace("%data%",content);
     },
     
+    "outputArray": function (element, index, array){
+        $("#skills").append(bio.replace(HTMLskills,array[index].skill));
+        $("#skills").append(bio.replace(HTMLskillsBar,array[index].skillLevel));
+    },
+    
+    "bioPicHandler": function (){
+        var width = $(window).width();
+        if(width<=499){
+
+            $(".biopic").removeAttr("src").attr("src","images/me-600.jpg");
+        }else if(width<=900){
+            $(".biopic").removeAttr("src").attr("src","images/me-980.jpg");
+        }else {
+            $(".biopic").removeAttr("src").attr("src","images/me-1200.jpg");
+        }
+    },
     // function to display the header 
-    "displayHeader": function(){
-        
+    "display": function(){
         $('#header').prepend(this.replace(HTMLheaderRole,this.role));
         $('#header').prepend(this.replace(HTMLheaderName,this.name));
         $("#header").append(this.replace(HTMLwelcomeMsg,this.welcomeMessage));
@@ -63,13 +78,8 @@ var bio = {
         $("#header").append(this.replace(HTMLbioPic,this.biopic));
         $("#header").append(this.replace(HTMLcodePic,this.codepic));
         $("#header").append('<div style="clear: both;"></div>');
-        
         $("#header").append(HTMLskillsStart);
-        for(skill in bio.skills) {
-            $("#skills").append(this.replace(HTMLskills,bio.skills[skill].skill));
-            $("#skills").append(this.replace(HTMLskillsBar,bio.skills[skill].skillLevel));
-            
-        };
+        bio.skills.forEach(this.outputArray);
         
         
     },
@@ -153,25 +163,28 @@ var education = {
     "replace": function(target,content){
         return target.replace("%data%",content);
     },
+     "outputArraySchool": function (element, index, array){
+         $(".education-entry").append(education.replace(HTMLschoolName,array[index].name)+education.replace(HTMLschoolDegree,array[index].degree));
+         $(".education-entry").append(education.replace(HTMLschoolLocation,array[index].location));
+         $(".education-entry").append(education.replace(HTMLschoolDates,array[index].dates));
+         array[index].majors.forEach(function(element, index, array){
+         $(".education-entry").append(education.replace(HTMLschoolMajor,array[index]));       
+         });  
+         
+     },
+    "outputArrayOnline": function (element, index, array){
+        $(".education-entry").append(education.replace(HTMLonlineTitle,array[index].title)+education.replace(HTMLonlineSchool,education.upperCase(array[index].school)));
+            $(".education-entry").append(education.replace(HTMLonlineDates,array[index].dates));
+           $(".education-entry").append(education.replace(HTMLonlineURL,array[index].url));
+    },
     "display": function(){
         $("#education").append(HTMLschoolStart);
-        for (school in education.schools){
-            $(".education-entry").append(this.replace(HTMLschoolName,education.schools[school].name)+this.replace(HTMLschoolDegree,education.schools[school].degree));
-            $(".education-entry").append(this.replace(HTMLschoolDates,education.schools[school].dates));
-            $(".education-entry").append(this.replace(HTMLschoolMajor,education.schools[school].majors));
+        education.schools.forEach(this.outputArraySchool);
+        //$("#education").append(HTMLonlineClasses);
+        $(HTMLonlineClasses).appendTo(".education-entry:last");
+        education.onlineCourses.forEach(this.outputArrayOnline);
         }
        
-     
-      $(HTMLonlineClasses).appendTo(".education-entry:last");
-       for (onlineCourse in education.onlineCourses){
-            $(".education-entry").append(this.replace(HTMLonlineTitle,education.onlineCourses[onlineCourse].title)+this.replace(HTMLonlineSchool,this.upperCase(this.onlineCourses[onlineCourse].school)));
-            $(".education-entry").append(this.replace(HTMLonlineDates,this.onlineCourses[onlineCourse].dates));
-           $(".education-entry").append(this.replace(HTMLonlineURL,this.onlineCourses[onlineCourse].url));
-           
-        }
-    }
-    
-   
 };
 
 var work = {
@@ -229,23 +242,22 @@ var work = {
     "replace": function(target,content){
         return target.replace("%data%",content);
     },
+    "outputJobs": function (element, index, array){
+         $("#workExperience").append(HTMLworkStart);
+        $(".work-entry:last").append(work.replace(HTMLworkEmployer,array[index].employer)+work.replace(HTMLworkTitle,array[index].title));
+        $(".work-entry:last").append(work.replace(HTMLworkDates,array[index].dates));
+        $(".work-entry:last").append(work.replace(HTMLworkDescription,array[index].description));
+        $(".work-entry:last").append(work.replace(HTMLworkLocation,array[index].location));
+    },
     "display": function(){
        
-        for (position in this.jobs){
-            $("#workExperience").append(HTMLworkStart);
-            $(".work-entry:last").append(this.replace(HTMLworkEmployer,work.jobs[position].employer)+this.replace(HTMLworkTitle,work.jobs[position].title));
-            $(".work-entry:last").append(this.replace(HTMLworkDates,this.jobs[position].dates));
-            $(".work-entry:last").append(this.replace(HTMLworkDescription,this.jobs[position].description));
-            $(".work-entry:last").append(this.replace(HTMLworkLocation,this.jobs[position].location));
-         
-            
-        }
+        work.jobs.forEach(this.outputJobs);
         
     }
 };
 
 var projects = {
-  "projects":[
+    "projects":[
       {
           "title": "Online resume",
           "dates": "2016-2016",
@@ -269,37 +281,39 @@ var projects = {
           ]
       }
       
-  ],
-"upperCase": function(string){
-    var split = string.split(" ");
-    var result = "";
-    for (var i=0;i<split.length;i++){
-        var first = split[i].slice(0,1).toLocaleUpperCase();
-        var rest = split[i].slice(1).toLocaleLowerCase();
-        result += first+rest+" ";
-        
-    }
-    
-    return result.slice(0,result.length-1);
-    
-}, 
-"replace": function(target,content){
-    return target.replace("%data%",content);
- },
-"display": function(){
-    $("#projects").append(HTMLprojectStart);
-    for (project in projects.projects){
-       
-        $(".project-entry").append(this.replace(HTMLprojectTitle,this.upperCase(this.projects[project].title)));
-        $(".project-entry").append(this.replace(HTMLprojectDates,this.projects[project].dates));
-        $(".project-entry").append(this.replace(HTMLprojectDescription,this.projects[project].description));
-        for (pic in this.projects[project].images){
-            if(this.projects[project].images.length!=0){
-                $(".project-entry").append(this.replace(HTMLprojectImage,this.projects[project].images[pic]));
-            }
+    ],
+    "upperCase": function(string){
+        var split = string.split(" ");
+        var result = "";
+        for (var i=0;i<split.length;i++){
+            var first = split[i].slice(0,1).toLocaleUpperCase();
+            var rest = split[i].slice(1).toLocaleLowerCase();
+            result += first+rest+" ";
+
         }
-    }
-}
+
+        return result.slice(0,result.length-1);
+
+    }, 
+    "replace": function(target,content){
+        return target.replace("%data%",content);
+     },
+    "outputArrayProjects": function (element, index, array){
+        $(".project-entry").append(projects.replace(HTMLprojectTitle,projects.upperCase(array[index].title)));
+        $(".project-entry").append(projects.replace(HTMLprojectDates,array[index].dates));
+        $(".project-entry").append(projects.replace(HTMLprojectDescription,array[index].description));
+        array[index].images.forEach(function(element,index,array){
+            if(array[index].length!=0){
+                $(".project-entry").append(projects.replace(HTMLprojectImage,array[index]));
+            }
+        });
+    },
+    "display": function(){
+        $("#projects").append(HTMLprojectStart);
+        this.projects.forEach(this.outputArrayProjects);
+
+
+        }
 };
 
 
@@ -311,7 +325,7 @@ How to append data to the index.html file
 ----------------------------------
 */
 
-bio.displayHeader();
+bio.display();
 bio.displayFooter();
 work.display();
 projects.display();
@@ -320,17 +334,7 @@ $("#mapDiv").append(googleMap);
 
 
 // callback function to figure out which biopic to select based on screen size so we can optimize load time and imporve picture sharpness for different screen sizes 
-function bioPicHandler(){
-    var width = $(window).width();
-    if(width<=499){
-        
-        $(".biopic").removeAttr("src").attr("src","images/me-600.jpg");
-    }else if(width<=900){
-        $(".biopic").removeAttr("src").attr("src","images/me-980.jpg");
-    }else {
-        $(".biopic").removeAttr("src").attr("src","images/me-1200.jpg");
-    }
-}
+
 
 // callback to resize the codePic element to match the height of the biopic element. Callback is attached to the biopic resize or load event, with CSS I control it only to show only on specific screen sizes to match my responsive layout design
 function codePicHandler(){
@@ -370,7 +374,7 @@ function iconHandler(width){
 // iconHandler is setting the icon sizes for the footer
 $(document).on("load resize",iconHandler($(this).width()));
 // bioPicHandler is deciding which picture to fetch from the server to optimize load time
-$(window).on('load resize',bioPicHandler);
+$(window).on('load resize',bio.bioPicHandler);
 // codePicHandler fires when biopic is resized to match the picture height of codePic
 $(".biopic").on('load resize',codePicHandler);
 
